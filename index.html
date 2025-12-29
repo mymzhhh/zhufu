@@ -234,7 +234,7 @@
         const config = {
             birthdayPerson: "小笨蛋", // 朋友的名字
             birthdayDate: "2024-12-15", // 朋友的生日日期
-            message: `亲爱的美丽，<br><br>
+            message: `亲爱的小笨蛋，<br><br>
                     在这个特别的日子里，我想对你说：<br>
                     愿你的生活像彩虹一样绚烂多彩！<br>
                     愿你的每一天都充满阳光和欢笑！<br>
@@ -366,37 +366,6 @@
         }
 
         // 保存祝福语到本地存储
-        function generateQRCode() {
-    const currentUrl = window.location.href;
-    const qrContainer = document.getElementById('qrcode');
-    
-    // 清空容器
-    qrContainer.innerHTML = '';
-    
-    try {
-        // 使用QRCode生成二维码
-        new QRCode(qrContainer, {
-            text: currentUrl,
-            width: 150,
-            height: 150,
-            colorDark: "#000000",
-            colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.H
-        });
-    } catch (error) {
-        // 如果生成二维码失败，显示错误信息
-        qrContainer.innerHTML = `
-            <div style="background: white; padding: 10px; display: inline-block;">
-                <div style="width: 150px; height: 150px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-                    <span style="color: #666;">二维码生成失败</span>
-                </div>
-                <p style="margin-top: 10px; font-size: 0.9em; color: #666;">请检查网络或刷新页面</p>
-            </div>
-            <p style="margin-top: 10px;">当前页面链接：<br><small>${currentUrl}</small></p>
-        `;
-    }
-}
-
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', initializePage);
     </script>
