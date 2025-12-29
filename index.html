@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐！🎂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff6b6b;
+            animation: fall 5s linear infinite;
+        }
+        
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+        
+        h1 {
+            color: #ff6b6b;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .birthday-person {
+            font-size: 3rem;
+            color: #ff8e53;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        .message {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin: 30px 0;
+            text-align: left;
+            padding: 20px;
+            background: #fff9f9;
+            border-radius: 15px;
+            border-left: 5px solid #ff6b6b;
+        }
+        
+        .photo-container {
+            margin: 30px 0;
+        }
+        
+        .photo {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 15px;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .audio-player, .video-player {
+            margin: 25px auto;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        audio, video {
+            width: 100%;
+            border-radius: 10px;
+        }
+        
+        .counter {
+            font-size: 1.5rem;
+            margin: 25px 0;
+            color: #ff8e53;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+        }
+        
+        .surprise {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #fffbee;
+            border-radius: 15px;
+            border: 2px dashed #ffc107;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .birthday-person {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 彩色纸屑 -->
+        <div id="confetti-container"></div>
+        
+        <h1>🎉 生日快乐！ 🎉</h1>
+        
+        <div class="birthday-person" id="name">[请在此处输入朋友的名字]</div>
+        
+        <div class="message" id="message">
+            <p>亲爱的朋友，</p>
+            <p>在这个特别的日子里，我想对你说：愿你的每一天都充满阳光和欢笑！🎂</p>
+            <p>希望所有的美好都如期而至，所有的幸运都围绕在你身边。</p>
+            <p>祝你生日快乐，心想事成！</p>
+            <p style="text-align: right; margin-top: 20px;">—— 你的朋友</p>
+        </div>
+        
+        <!-- 照片区域 -->
+        <div class="photo-container">
+            <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                 alt="生日蛋糕" class="photo" id="main-photo">
+        </div>
+        
+        <!-- 音频祝福 -->
+        <div class="audio-player">
+            <h3>🎵 我的语音祝福</h3>
+            <audio controls>
+                <!-- 替换为你的音频链接 -->
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                你的浏览器不支持音频播放
+            </audio>
+        </div>
+        
+        <!-- 视频祝福 -->
+        <div class="video-player">
+            <h3>🎬 生日祝福视频</h3>
+            <video controls poster="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80">
+                <!-- 替换为你的视频链接 -->
+                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                你的浏览器不支持视频播放
+            </video>
+        </div>
+        
+        <!-- 倒计时 -->
+        <div class="counter">
+            <p>🎂 今天是你的生日！ 🎂</p>
+            <p id="countdown">正在计算...</p>
+        </div>
+        
+        <!-- 互动按钮 -->
+        <div>
+            <button onclick="showSurprise()">点击查看惊喜！</button>
+            <button onclick="changeTheme()">切换主题颜色</button>
+            <button onclick="playBirthdaySong()">播放生日歌</button>
+        </div>
+        
+        <!-- 隐藏惊喜 -->
+        <div class="surprise" id="surprise">
+            <h3>🎁 给你的特别礼物 🎁</h3>
+            <p>我为你准备了一份特别的礼物：</p>
+            <p>🌟 一张特别定制的电子贺卡</p>
+            <p>🎶 一份为你精选的音乐歌单</p>
+            <p>📸 一本属于我们的回忆相册</p>
+            <p>希望你喜欢这份心意！❤️</p>
+        </div>
+        
+        <!-- 祝福语列表 -->
+        <div style="margin-top: 40px; text-align: left;">
+            <h3>💌 大家的祝福</h3>
+            <div id="wishes-list">
+                <p>小明：生日快乐，永远18岁！</p>
+                <p>小红：祝你天天开心，万事如意！</p>
+                <!-- 可以添加更多祝福 -->
+            </div>
+            <div style="margin-top: 20px;">
+                <input type="text" id="new-wish" placeholder="写下你的祝福..." style="width: 70%; padding: 10px; border-radius: 5px; border: 1px solid #ddd;">
+                <button onclick="addWish()">添加祝福</button>
+            </div>
+        </div>
+        
+        <!-- 二维码 -->
+        <div style="margin-top: 40px; padding: 20px; background: white; border-radius: 10px;">
+            <h3>📱 分享这份祝福</h3>
+            <p>扫描下方二维码分享给朋友：</p>
+            <div id="qrcode"></div>
+        </div>
+    </div>
+
+    <script>
+        // 基础配置 - 修改这些变量
+        const config = {
+            birthdayPerson: "李美丽", // 朋友的名字
+            birthdayDate: "2024-12-15", // 朋友的生日日期
+            message: `亲爱的美丽，<br><br>
+                    在这个特别的日子里，我想对你说：<br>
+                    愿你的生活像彩虹一样绚烂多彩！<br>
+                    愿你的每一天都充满阳光和欢笑！<br>
+                    祝你生日快乐，永远美丽！<br><br>
+                    爱你的，<br>
+                    你的好朋友`,
+            photoUrl: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+            audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // 替换为你的音频
+            videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" // 替换为你的视频
+        };
+
+        // 初始化页面
+        function initializePage() {
+            // 设置名字和祝福语
+            document.getElementById('name').textContent = config.birthdayPerson;
+            document.getElementById('message').innerHTML = config.message;
+            
+            // 设置照片
+            document.getElementById('main-photo').src = config.photoUrl;
+            
+            // 设置音频
+            const audioElement = document.querySelector('audio source');
+            audioElement.src = config.audioUrl;
+            document.querySelector('audio').load();
+            
+            // 设置视频
+            const videoElement = document.querySelector('video source');
+            videoElement.src = config.videoUrl;
+            document.querySelector('video').load();
+            
+            // 创建纸屑效果
+            createConfetti();
+            
+            // 更新倒计时
+            updateCountdown();
+            
+            // 生成当前页面的二维码
+            generateQRCode();
+        }
+
+        // 创建彩色纸屑效果
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#ff6b6b', '#ff8e53', '#ffd166', '#06d6a0', '#118ab2', '#ef476f'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = `${Math.random() * -20}px`;
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = `${Math.random() * 10 + 5}px`;
+                confetti.style.height = confetti.style.width;
+                confetti.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(confetti);
+            }
+        }
+
+        // 更新生日倒计时
+        function updateCountdown() {
+            const today = new Date();
+            const birthday = new Date(config.birthdayDate);
+            birthday.setFullYear(today.getFullYear());
+            
+            if (today > birthday) {
+                birthday.setFullYear(today.getFullYear() + 1);
+            }
+            
+            const diffTime = birthday - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            const countdownElement = document.getElementById('countdown');
+            
+            if (diffDays === 0) {
+                countdownElement.innerHTML = "🎉 今天是你的生日！ 🎉";
+            } else {
+                countdownElement.innerHTML = `距离你的生日还有：<strong>${diffDays}</strong> 天`;
+            }
+        }
+
+        // 显示隐藏的惊喜
+        function showSurprise() {
+            const surprise = document.getElementById('surprise');
+            surprise.style.display = 'block';
+            surprise.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 切换主题颜色
+        const themes = [
+            { bg: 'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)' },
+            { bg: 'linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%)' },
+            { bg: 'linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%)' },
+            { bg: 'linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)' }
+        ];
+        let currentTheme = 0;
+
+        function changeTheme() {
+            currentTheme = (currentTheme + 1) % themes.length;
+            document.body.style.background = themes[currentTheme].bg;
+        }
+
+        // 播放生日歌
+        function playBirthdaySong() {
+            const audio = new Audio('https://assets.mixkit.co/music/preview/mixkit-happy-birthday-to-you-443.mp3');
+            audio.play();
+            
+            // 添加视觉反馈
+            document.body.style.animation = 'pulse 0.5s';
+            setTimeout(() => {
+                document.body.style.animation = '';
+            }, 500);
+        }
+
+        // 添加祝福语
+        function addWish() {
+            const wishInput = document.getElementById('new-wish');
+            const wishText = wishInput.value.trim();
+            
+            if (wishText) {
+                const wishesList = document.getElementById('wishes-list');
+                const newWish = document.createElement('p');
+                newWish.textContent = `匿名: ${wishText}`;
+                wishesList.appendChild(newWish);
+                wishInput.value = '';
+                
+                // 保存到本地存储
+                saveWish(wishText);
+            }
+        }
+
+        // 保存祝福语到本地存储
+        function saveWish(wish) {
+            let wishes = JSON.parse(localStorage.getItem('birthdayWishes')) || [];
+            wishes.push(wish);
+            localStorage.setItem('birthdayWishes', JSON.stringify(wishes));
+        }
+
+        // 生成二维码
+        function generateQRCode() {
+            const currentUrl = window.location.href;
+            const qrContainer = document.getElementById('qrcode');
+            
+            // 使用第三方API生成二维码（实际使用时可能需要自己实现或使用库）
+            qrContainer.innerHTML = `
+                <div style="background: white; padding: 10px; display: inline-block;">
+                    <div style="width: 150px; height: 150px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                        <span style="color: #666;">二维码预览</span>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9em; color: #666;">实际二维码将在部署后自动生成</p>
+                </div>
+                <p style="margin-top: 10px;">当前页面链接：<br><small>${currentUrl}</small></p>
+            `;
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+</html>
