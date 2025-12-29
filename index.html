@@ -138,6 +138,8 @@
             }
         }
     </style>
+    <!-- 引入qrcode.js用于生成二维码 -->
+    <script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -364,28 +366,36 @@
         }
 
         // 保存祝福语到本地存储
-        function saveWish(wish) {
-            let wishes = JSON.parse(localStorage.getItem('birthdayWishes')) || [];
-            wishes.push(wish);
-            localStorage.setItem('birthdayWishes', JSON.stringify(wishes));
-        }
-
-        // 生成二维码
         function generateQRCode() {
-            const currentUrl = window.location.href;
-            const qrContainer = document.getElementById('qrcode');
-            
-            // 使用第三方API生成二维码（实际使用时可能需要自己实现或使用库）
-            qrContainer.innerHTML = `
-                <div style="background: white; padding: 10px; display: inline-block;">
-                    <div style="width: 150px; height: 150px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-                        <span style="color: #666;">二维码预览</span>
-                    </div>
-                    <p style="margin-top: 10px; font-size: 0.9em; color: #666;">实际二维码将在部署后自动生成</p>
+    const currentUrl = window.location.href;
+    const qrContainer = document.getElementById('qrcode');
+    
+    // 清空容器
+    qrContainer.innerHTML = '';
+    
+    try {
+        // 使用QRCode生成二维码
+        new QRCode(qrContainer, {
+            text: currentUrl,
+            width: 150,
+            height: 150,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    } catch (error) {
+        // 如果生成二维码失败，显示错误信息
+        qrContainer.innerHTML = `
+            <div style="background: white; padding: 10px; display: inline-block;">
+                <div style="width: 150px; height: 150px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                    <span style="color: #666;">二维码生成失败</span>
                 </div>
-                <p style="margin-top: 10px;">当前页面链接：<br><small>${currentUrl}</small></p>
-            `;
-        }
+                <p style="margin-top: 10px; font-size: 0.9em; color: #666;">请检查网络或刷新页面</p>
+            </div>
+            <p style="margin-top: 10px;">当前页面链接：<br><small>${currentUrl}</small></p>
+        `;
+    }
+}
 
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', initializePage);
